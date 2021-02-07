@@ -123,6 +123,6 @@ hist(rowMeans(x),
 
 ![](Statistical_Inference_Part1_files/figure-html/hist 2 exponential samples-1.png)<!-- -->
 
-We can see that the p-value is well below 5% which would indicate that the distrubution is normal when broken into samples of 40 rather than using the entire 40,000 samples together.
+We can see that the p-value is well below 5% we can conclude that the distrubution is normal when broken into samples of 40 rather than using the entire 40,000 samples together.
 
 Our assumptions are that the set.seed() was set to 1888 and sampling method is exponential distribution using R's built in function rexp() with rate = 0.2

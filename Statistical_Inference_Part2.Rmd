@@ -25,12 +25,6 @@ data("ToothGrowth")
 str(ToothGrowth)
 ```
 
-We can see that there are 60 observations of three variables, len, supp and dose. Let's also take a look at the summary of the data.
-
-```{r}
-summary(ToothGrowth)
-```
-
 The summary above along with the documentation of the data set in r using the function ?ToothGrowth gives us an overview of the data that we are looking at. Here's the description from the R documentation:
 
 *"The response is the length of odontoblasts (cells responsible for tooth growth) in 60 guinea pigs. Each animal received one of three dose levels of vitamin C (0.5, 1, and 2 mg/day) by one of two delivery methods, orange juice or ascorbic acid (a form of vitamin C and coded as VC)."*
@@ -71,15 +65,15 @@ test_2.0_OJ <- filter(ToothGrowth, dose == 2.0, supp == "OJ")
 
 t.test(test_0.5_VC$len,
        test_0.5_OJ$len,
-       alternative = "two.sided")
+       alternative = "two.sided")$p.value
 
 t.test(test_1.0_VC$len,
        test_1.0_OJ$len,
-       alternative = "two.sided")
+       alternative = "two.sided")$p.value
 
 t.test(test_2.0_VC$len,
        test_2.0_OJ$len,
-       alternative = "two.sided")
+       alternative = "two.sided")$p.value
 
 ```
 
@@ -97,18 +91,13 @@ test_2.0 <- filter(ToothGrowth, dose == 2.0)
 
 t.test(test_0.5$len,
        test_1.0$len,
-       alternative = "less")
-```
-
-We can see that with a very low p-value that we can reject the null hypothsesis for the difference in means between 0.5 and 1.0 doses. Let's also run the same test for the difference between 1.0 and 2.0 doses.
-
-```{r}
+       alternative = "less")$p.value
 t.test(test_1.0$len,
        test_2.0$len,
-       alternative = "less")
+       alternative = "less")$p.value
 ```
 
-Here we can also see that as expected there is a significant difference between the 1.0 and 2.0 doses with a very small p-value as well.
+We can see that with a very low p-value that we can reject the null hypothsesis for the difference in means between 0.5 and 1.0 doses and also for the difference between 1.0 and 2.0. We can also assume the difference between 0.5 and 2.0 is significant.
 
 ## Conclusion
 
