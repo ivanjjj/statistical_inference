@@ -1,9 +1,10 @@
 ---
 title: "Statistical Inference - Inferential Data Analysis"
+author: "Ivan Jennings"
 output:
   html_document:
     keep_md: yes
-author: Ivan Jennings
+  pdf_document: default
 ---
 
 ## Overview
@@ -33,23 +34,6 @@ str(ToothGrowth)
 ##  $ dose: num  0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 ...
 ```
 
-We can see that there are 60 observations of three variables, len, supp and dose. Let's also take a look at the summary of the data.
-
-
-```r
-summary(ToothGrowth)
-```
-
-```
-##       len        supp         dose      
-##  Min.   : 4.20   OJ:30   Min.   :0.500  
-##  1st Qu.:13.07   VC:30   1st Qu.:0.500  
-##  Median :19.25           Median :1.000  
-##  Mean   :18.81           Mean   :1.167  
-##  3rd Qu.:25.27           3rd Qu.:2.000  
-##  Max.   :33.90           Max.   :2.000
-```
-
 The summary above along with the documentation of the data set in r using the function ?ToothGrowth gives us an overview of the data that we are looking at. Here's the description from the R documentation:
 
 *"The response is the length of odontoblasts (cells responsible for tooth growth) in 60 guinea pigs. Each animal received one of three dose levels of vitamin C (0.5, 1, and 2 mg/day) by one of two delivery methods, orange juice or ascorbic acid (a form of vitamin C and coded as VC)."*
@@ -69,7 +53,7 @@ xyplot(len ~ supp | factor(dose),
        )
 ```
 
-![](Statistical_Inference_Part2_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+![](Statistical_Inference_Part2_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
 The above plot shows us each dosage (0.5, 1, 2)  and each delivery method (OJ = Orange Juice, VC = Ascorbic Acid)
 
@@ -94,61 +78,31 @@ test_2.0_OJ <- filter(ToothGrowth, dose == 2.0, supp == "OJ")
 
 t.test(test_0.5_VC$len,
        test_0.5_OJ$len,
-       alternative = "two.sided")
+       alternative = "two.sided")$p.value
 ```
 
 ```
-## 
-## 	Welch Two Sample t-test
-## 
-## data:  test_0.5_VC$len and test_0.5_OJ$len
-## t = -3.1697, df = 14.969, p-value = 0.006359
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  -8.780943 -1.719057
-## sample estimates:
-## mean of x mean of y 
-##      7.98     13.23
+## [1] 0.006358607
 ```
 
 ```r
 t.test(test_1.0_VC$len,
        test_1.0_OJ$len,
-       alternative = "two.sided")
+       alternative = "two.sided")$p.value
 ```
 
 ```
-## 
-## 	Welch Two Sample t-test
-## 
-## data:  test_1.0_VC$len and test_1.0_OJ$len
-## t = -4.0328, df = 15.358, p-value = 0.001038
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  -9.057852 -2.802148
-## sample estimates:
-## mean of x mean of y 
-##     16.77     22.70
+## [1] 0.001038376
 ```
 
 ```r
 t.test(test_2.0_VC$len,
        test_2.0_OJ$len,
-       alternative = "two.sided")
+       alternative = "two.sided")$p.value
 ```
 
 ```
-## 
-## 	Welch Two Sample t-test
-## 
-## data:  test_2.0_VC$len and test_2.0_OJ$len
-## t = 0.046136, df = 14.04, p-value = 0.9639
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  -3.63807  3.79807
-## sample estimates:
-## mean of x mean of y 
-##     26.14     26.06
+## [1] 0.9638516
 ```
 
 Using the t.test function with default confidence interval of 95% for a two sided test, we can see that for the doses of 0.5 and 1.0 the delivery method has a significant effect on the length of odontoblasts levels based on the p-values below 5%, so it appears that the OJ method is more effective for those doses. For the 2.0 dose we fail to rule out the null hypothesis that there is a difference.
@@ -165,47 +119,24 @@ test_2.0 <- filter(ToothGrowth, dose == 2.0)
 
 t.test(test_0.5$len,
        test_1.0$len,
-       alternative = "less")
+       alternative = "less")$p.value
 ```
 
 ```
-## 
-## 	Welch Two Sample t-test
-## 
-## data:  test_0.5$len and test_1.0$len
-## t = -6.4766, df = 37.986, p-value = 0.00000006342
-## alternative hypothesis: true difference in means is less than 0
-## 95 percent confidence interval:
-##       -Inf -6.753323
-## sample estimates:
-## mean of x mean of y 
-##    10.605    19.735
+## [1] 0.00000006341504
 ```
-
-We can see that with a very low p-value that we can reject the null hypothsesis for the difference in means between 0.5 and 1.0 doses. Let's also run the same test for the difference between 1.0 and 2.0 doses.
-
 
 ```r
 t.test(test_1.0$len,
        test_2.0$len,
-       alternative = "less")
+       alternative = "less")$p.value
 ```
 
 ```
-## 
-## 	Welch Two Sample t-test
-## 
-## data:  test_1.0$len and test_2.0$len
-## t = -4.9005, df = 37.101, p-value = 0.000009532
-## alternative hypothesis: true difference in means is less than 0
-## 95 percent confidence interval:
-##      -Inf -4.17387
-## sample estimates:
-## mean of x mean of y 
-##    19.735    26.100
+## [1] 0.000009532148
 ```
 
-Here we can also see that as expected there is a significant difference between the 1.0 and 2.0 doses with a very small p-value as well.
+We can see that with a very low p-value that we can reject the null hypothsesis for the difference in means between 0.5 and 1.0 doses and also for the difference between 1.0 and 2.0. We can also assume the difference between 0.5 and 2.0 is significant.
 
 ## Conclusion
 
