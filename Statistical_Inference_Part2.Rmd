@@ -10,7 +10,7 @@ author: Ivan Jennings
 Analysis of the ToothGrowth data set within the R package. We're going to perform some basic exploratory data analysis as well as using confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose.
 
 ## Loading and reviewing data
-```{r}
+```{r load libraries and review}
 library(lattice)
 data("ToothGrowth")
 str(ToothGrowth)
